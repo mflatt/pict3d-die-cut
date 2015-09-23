@@ -10,7 +10,7 @@
 
 (define (die-cut-path-datum c
                             #:depth [depth 1.0]
-                            #:double-sided? [double-sided? #t]
+                            #:double-sided? [double-sided? #f]
                             #:expected-scale [expected-scale 1.0])
   (define (flip y) (- y))
   
@@ -59,7 +59,7 @@
 
 (define (die-cut p
                  #:depth [depth 1.0]
-                 #:double-sided? [double-sided? #t]
+                 #:double-sided? [double-sided? #f]
                  #:expected-scale [expected-scale 1.0])
   (define-values (c o) (send p get-datum))
   (die-cut-path-datum c
@@ -71,7 +71,7 @@
                       #:font [font (make-font)]
                       #:combine? [combine? #f]
                       #:depth [depth 1.0]
-                      #:double-sided? [double-sided? #t]
+                      #:double-sided? [double-sided? #f]
                       #:expected-scale [expected-scale 1.0])
   (define p (new dc-path%))
   (send p text-outline font str 0 0 combine?)

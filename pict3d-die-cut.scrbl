@@ -13,7 +13,7 @@ for text or other drawing paths created with @racket[dc-path%].}
 
 @defproc[(die-cut [dc-path dc-path%]
                   [#:depth depth real? 1.0]
-                  [#:double-sided? double-sided? any/c #t]
+                  [#:double-sided? double-sided? any/c #f]
                   [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
@@ -34,7 +34,7 @@ scale at which line segments replace curves.}
                        [#:font font (is-a/c font%) (make-font)]
                        [#:combine? combine? any/c #f]
                        [#:depth depth real? 1.0]
-                       [#:double-sided? double-sided? any/c #t]
+                       [#:double-sided? double-sided? any/c #f]
                        [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
@@ -45,7 +45,7 @@ text-outline] and then given @racket[font], @racket[text], and
 
 @defproc[(die-cut-path-datum [datum (listof (listof vector?))]
                              [#:depth depth real? 1.0]
-                             [#:double-sided? double-sided? any/c #t]
+                             [#:double-sided? double-sided? any/c #f]
                              [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
