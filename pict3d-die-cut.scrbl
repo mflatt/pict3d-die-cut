@@ -13,7 +13,9 @@ for text or other drawing paths created with @racket[dc-path%].}
 
 @defproc[(die-cut [dc-path dc-path%]
                   [#:depth depth real? 1.0]
-                  [#:double-sided? double-sided? any/c #f]
+                  [#:top? top? any/c #t]
+                  [#:bottom? bottom? any/c #f]
+                  [#:sides? sides? any/c #f]
                   [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
@@ -23,8 +25,11 @@ solid face that matches the region bounded by the closed paths of
 flipped, the resulting 3-D object extends in the negative y-direction
 the same amount that the path extends in the positive y-direction. The
 3-D object starts in the z-origin plane and extends in negative
-z-direction by @racket[depth]. If @racket[double-sided?] is true, then
-a solid face is also constructed for the back size of the region.
+z-direction by @racket[depth].
+
+The @racket[top?], @racket[bottom?], and @racket[sides?] arguments
+determine whether the text, its reverse side, and the sides (in the
+z-direction) are included in the result.
 
 If @racket[dc-path] contains any curves, they will be approximated by
 line segments. The @racket[expcted-scale] argument determines the
@@ -34,7 +39,9 @@ scale at which line segments replace curves.}
                        [#:font font (is-a/c font%) (make-font)]
                        [#:combine? combine? any/c #f]
                        [#:depth depth real? 1.0]
-                       [#:double-sided? double-sided? any/c #f]
+                       [#:top? top? any/c #t]
+                       [#:bottom? bottom? any/c #f]
+                       [#:sides? sides? any/c #f]
                        [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
@@ -45,7 +52,9 @@ text-outline] and then given @racket[font], @racket[text], and
 
 @defproc[(die-cut-path-datum [datum (listof (listof vector?))]
                              [#:depth depth real? 1.0]
-                             [#:double-sided? double-sided? any/c #f]
+                             [#:top? top? any/c #t]
+                             [#:bottom? bottom? any/c #f]
+                             [#:sides? sides? any/c #f]
                              [#:expected-scale expected-scale real? 1.0])
          pict3d?]{
 
