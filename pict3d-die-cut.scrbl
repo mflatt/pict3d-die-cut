@@ -38,6 +38,7 @@ scale at which line segments replace curves.}
 @defproc[(die-cut-text [text string?]
                        [#:font font (is-a/c font%) (make-font)]
                        [#:combine? combine? any/c #f]
+                       [#:center? center? any/c #f]
                        [#:depth depth real? 1.0]
                        [#:top? top? any/c #t]
                        [#:bottom? bottom? any/c #f]
@@ -46,9 +47,31 @@ scale at which line segments replace curves.}
          pict3d?]{
 
 Uses @racket[die-cut] on a path constructed with @xmethod[dc-path%
-text-outline] and then given @racket[font], @racket[text], and
-@racket[combine?].}
+text-outline] given @racket[font], @racket[text], and
+@racket[combine?].
 
+If @racket[center?] is @racket[#f], the top-left of the text is at the
+origin in the z-origin plane, which means that the text extends in the
+positive x-direction and negative y-direction. If @racket[center?] is
+@racket[#t], the text is centered at the origin, instead.
+
+@history[#:changed "1.1" @elem{Added the @racket[#:center?] argument.}]}
+
+@defproc[(die-cut-text/size [text string?]
+                            [#:font font (is-a/c font%) (make-font)]
+                            [#:combine? combine? any/c #f]
+                            [#:center? center? any/c #f]
+                            [#:depth depth real? 1.0]
+                            [#:top? top? any/c #t]
+                            [#:bottom? bottom? any/c #f]
+                            [#:sides? sides? any/c #f]
+                            [#:expected-scale expected-scale real? 1.0])
+         (values pict3d? real? real?)]{
+
+Like @racket[die-cut-text], but returns the text width and height
+(within its plane) in addition to the generated @racket[Pict3D].
+
+@history[#:added "1.1"]}
 
 @defproc[(die-cut-path-datum [datum (listof (listof vector?))]
                              [#:depth depth real? 1.0]

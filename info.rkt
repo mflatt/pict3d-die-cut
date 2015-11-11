@@ -13,3 +13,5 @@
 (define build-deps '("draw-doc"
                      "racket-doc"
                      "scribble-lib"))
+
+(define version "1.1")

@@ -6,6 +6,7 @@
 
 (provide die-cut
          die-cut-text
+         die-cut-text/size
          die-cut-path-datum)
 
 (define (die-cut-path-datum c
@@ -78,19 +79,51 @@
                       #:sides? sides?
                       #:expected-scale expected-scale))
            
+(define (die-cut-text/size str
+                           #:font [font (make-font)]
+                           #:center? [center? #f]
+                           #:combine? [combine? #f]
+                           #:depth [depth 1.0]
+                           #:top? [top? #t]
+                           #:bottom? [bottom? #f]
+                           #:sides? [sides? #f]
+                           #:expected-scale [expected-scale 1.0])
+  (define bm (make-bitmap 1 1))
+  (define dc (send bm make-dc))
+  (define-values (w h d a) (send dc get-text-extent str font combine?))
+
+  (define p (new dc-path%))
+  (send p text-outline font str 0 0 combine?)
+  (values (let ([c (die-cut p
+                            #:depth depth
+                            #:top? top?
+                            #:bottom? bottom?
+                            #:sides? sides?
+                            #:expected-scale expected-scale)])
+            (if center?
+                (move-y (move-x c (* w -1/2))
+                        (* h 1/2))
+                c))
+          w
+          h))
+
 (define (die-cut-text str
                       #:font [font (make-font)]
+                      #:center? [center? #f]
                       #:combine? [combine? #f]
                       #:depth [depth 1.0]
                       #:top? [top? #t]
                       #:bottom? [bottom? #f]
                       #:sides? [sides? #f]
                       #:expected-scale [expected-scale 1.0])
-  (define p (new dc-path%))
-  (send p text-outline font str 0 0 combine?)
-  (die-cut p
-           #:depth depth
-           #:top? top?
-           #:bottom? bottom?
-           #:sides? sides?
-           #:expected-scale expected-scale))
+  (define-values (p w h) (die-cut-text/size str
+                                            #:font font
+                                            #:center? center?
+                                            #:combine? combine?
+                                            #:depth depth
+                                            #:top? top?
+                                            #:bottom? bottom?
+                                            #:sides? sides?
+                                            #:expected-scale expected-scale))
+  p)
+
